@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'LDProgressHUD'
-  s.version  = '1.0.1'
+  s.version  = '1.0.2'
   s.ios.deployment_target = '12.0'
   s.swift_version = '4.2'
   s.license  =  { :type => 'MIT', :file => 'LICENSE' }

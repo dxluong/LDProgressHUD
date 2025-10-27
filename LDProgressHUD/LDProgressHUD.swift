@@ -930,7 +930,7 @@ public class LDProgressHUD: UIView {
     }
     
     func notificationUserInfo() -> [AnyHashable : Any]? {
-        return self.statusLabel.text?.isEmpty == false ? [LDProgressHUDStatusUserInfoKey : self.statusLabel.text!] : nil
+        return self.statusLabel.text?.isEmpty ?? true ? nil : [LDProgressHUDStatusUserInfoKey : self.statusLabel.text!]
     }
     
     @objc func positionHUD(_ notification: Notification?) {
@@ -947,8 +947,8 @@ public class LDProgressHUD: UIView {
 #if os(iOS)
         // Get keyboardHeight in regard to current state
         if let userInfo = notification?.userInfo {
-            let keyboardFrame = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-            animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
+            let keyboardFrame = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue ?? .zero
+            animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0.0
             
             if notification?.name == UIResponder.keyboardWillShowNotification || notification?.name == UIResponder.keyboardDidShowNotification {
                 keyboardHeight = orientation.isPortrait ? keyboardFrame.height : keyboardFrame.width
@@ -1163,7 +1163,7 @@ public class LDProgressHUD: UIView {
         }
         
         // Get duration
-        let duration: TimeInterval? = data is Timer ? (data as! Timer).userInfo as? TimeInterval : data as? TimeInterval
+        let duration: TimeInterval? = data is Timer ? (data as? Timer)?.userInfo as? TimeInterval : data as? TimeInterval
         
         // Show if not already visible
         if backgroundView.alpha != 1.0 {
